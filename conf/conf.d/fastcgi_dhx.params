@@ -1,0 +1,4 @@
+fastcgi_param DHX_LIB_DIR       $document_root/cb;
+fastcgi_param DHX_TEMPLATE_DIR  $document_root/dhx;
+fastcgi_param DHX_ERR_FILE      $document_root/dhx/error;
+

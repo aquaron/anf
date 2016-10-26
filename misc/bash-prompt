@@ -1,0 +1,2 @@
+export TITLE='\[\033]0;\u@\h:${PWD/#$HOME/~}\007\]'
+export PS1="${TITLE}\h \W$ "
