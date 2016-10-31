@@ -30,9 +30,11 @@ RUN apk add --no-cache \
 && curl -L http://cpanmin.us -o /usr/bin/cpanm; chmod +x /usr/bin/cpanm \
 && cpanm -n \
  CGI JSON \
- DBD::mysql Apache::Session::MySQL \
+ DBD::mysql@4.037 \
+ Apache::Session::MySQL \
  Redis \
- Crypt::ScryptKDF Crypt::CBC \
+ Crypt::ScryptKDF \
+ Crypt::CBC \
  File::Slurp \
  CSS::Inliner \
 
