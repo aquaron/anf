@@ -27,6 +27,7 @@ RUN apk add --no-cache \
 
 && ln -s /usr/bin/perl /usr/local/bin/perl \
 && mkdir -p $_root/cgi; ln -s /usr/bin/printenv $_root/cgi \
+&& mkdir -p $_root/html; echo "<a href=\"/cgi/printenv\">test cgi</a>" > $_root/html/index.html \
 && curl -L http://cpanmin.us -o /usr/bin/cpanm; chmod +x /usr/bin/cpanm \
 && cpanm -n \
  CGI JSON \
