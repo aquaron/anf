@@ -8,7 +8,7 @@ Nginx build on Alpine with FastCGI.
 
 If your host is `example.com` and port is `9090` here's how to run a simple test:
 
-    docker run -p 9090:8080 -h example.com --name anf-server -d aquaron/anf
+    docker run -p 9090:80 -h example.com --name anf-server -d aquaron/anf
 
 Point your browser to `example.com:9090` you should see a simple message with a link.
 Click on that to see the CGI in action.
@@ -17,11 +17,11 @@ Click on that to see the CGI in action.
 
 To run the Nginx server manually:
 
-    docker run -it -p 9090:8080 --name anf-server --entrypoint=/bin/sh aquaron/anf
+    docker run -it -p 9090:80 --name anf-server --entrypoint=/bin/sh aquaron/anf
 
 Once inside the container:
 
-    /usr/bin/nginx-fcgi &
+	runme.sh test
 
 
 ### Start Server
