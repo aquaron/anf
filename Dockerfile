@@ -8,10 +8,7 @@ ENV \
  _sock=/tmp/cgi.sock \
  PERL5LIB=/usr/share/nginx/lib
 
-COPY conf/nginx.conf $_etc/nginx.conf
-COPY conf/conf.d/* $_etc/conf.d/
-COPY bin/* /usr/bin/
-COPY misc/* /tmp/
+COPY data /data
 
 RUN apk add --no-cache \
  nginx \
@@ -26,7 +23,6 @@ RUN apk add --no-cache \
  mysql-dev \
 
 && ln -s /usr/bin/perl /usr/local/bin/perl \
-&& mkdir -p $_root/cgi; ln -s /usr/bin/printenv $_root/cgi \
 && curl -L http://cpanmin.us -o /usr/bin/cpanm; chmod +x /usr/bin/cpanm \
 && cpanm -n \
  CGI JSON \
@@ -38,10 +34,13 @@ RUN apk add --no-cache \
  File::Slurp \
  CSS::Inliner \
 
-&& mv /tmp/bash-prompt ~/.profile \
-&& patch -p0 < /tmp/Badger-Debug.patch \
+&& mv /data/misc/bash-prompt ~/.profile \
+&& patch -p0 < /data/misc/Badger-Debug.patch \
+&& mv /data/bin/* /usr/bin \
 && apk del g++ gcc make perl-dev curl wget
 
-EXPOSE 8080
+EXPOSE 80
 VOLUME $_root $_log $_etc
-CMD ["/usr/bin/nginx-fcgi"]
+
+ENTRYPOINT [ "runme.sh" ]
+CMD [ "daemon" ]
