@@ -39,8 +39,6 @@ RUN apk add --no-cache \
 && mv /data/bin/* /usr/bin \
 && apk del g++ gcc make perl-dev curl wget
 
-EXPOSE 80
 VOLUME $_root $_log $_etc
-
 ENTRYPOINT [ "runme.sh" ]
 CMD [ "daemon" ]
