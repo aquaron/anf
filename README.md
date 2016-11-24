@@ -102,31 +102,31 @@ Once inside the container:
         --name anf-server \
         -d aquaron/anf
 
-### `<port>`
+### `-p <port>`
 
 Maps the internal port `80` to localhost's port. 
 If you're using `anf` with [`anle`](https://github.com/aquaron/anle) 
 use port `999x` (starting with `x` is `1`) to make setup easier.
 
-### `<datadir>`, `<logdir>`, `<etcdir>`
+### `-v <datadir>`, `-v <logdir>`, `-v <etcdir>`
 
 You need to map the local directories to container's to get access
 to the files inside the containers:
 
-| Directory | Description
-| --------- | -----------
-| <datadir> | Maps to `/usr/share/nginx` where the HTML (data) files are
-| <logdir>  | Maps to `/var/log/nginx` stores log files
-| <etcdir>  | Maps to `/etc/nginx` configurations
+| Directory   | Description
+| ----------- | -----------
+| `<datadir>` | Maps to `/usr/share/nginx` where the HTML (data) files are
+| `<logdir>`  | Maps to `/var/log/nginx` stores log files
+| `<etcdir>`  | Maps to `/etc/nginx` configurations
 
-### `--name`
+### `--name anf`
 
 Gives this container a name for ease of access.
 If you want to attach to the running container:
 
     docker exec -it anf sh -l
 
-### `-d`
+### `-d aquaron/anf`
 
 Detatch the container and run in the background.
 
