@@ -1,0 +1,13 @@
+[Unit]
+Description=ANF Server Container
+Requires=docker.service
+After=docker.service
+
+[Service]
+Restart=always
+ExecStart=/usr/bin/docker run ${map} ${port} --name ${name} -h ${name} aquaron/${name}
+ExecStop=/usr/bin/docker stop -t 2 ${name}
+ExecStopPost=/usr/bin/docker rm -f ${name}
+
+[Install]
+WantedBy=default.target
