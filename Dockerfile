@@ -26,18 +26,21 @@ RUN apk add --no-cache \
 && curl -L http://cpanmin.us -o /usr/bin/cpanm; chmod +x /usr/bin/cpanm \
 && cpanm -n \
  CGI JSON \
- DBD::mysql@4.037 \
+ DBD::mysql \
  Apache::Session::MySQL \
  Redis \
  Crypt::ScryptKDF \
  Crypt::CBC \
  File::Slurp \
  CSS::Inliner \
+&& rm -rf /root/.cpanm \
 
 && mv /data/misc/bash-prompt ~/.profile \
 && patch -p0 < /data/misc/Badger-Debug.patch \
 && mv /data/bin/* /usr/bin \
-&& apk del g++ gcc make perl-dev curl wget
+&& apk del g++ gcc make curl wget perl-dev 
+
+ONBUILD RUN apk add --no-cache openssl g++ gcc make perl-dev expat-dev 
 
 VOLUME $_root $_log $_etc
 ENTRYPOINT [ "runme.sh" ]
