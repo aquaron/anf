@@ -35,9 +35,10 @@ RUN apt-get update && apt-get install -y \
  CSS::Inliner \
 
 && apt-get purge -y g++ gcc make curl wget \
+&& apt-get autoremove -y \
 && rm -rf /root/.cpanm /var/lib/apt/lists/* 
 
-ONBUILD RUN apt-get install -y openssl g++ gcc make
+ONBUILD RUN apt-get update && apt-get install -y openssl g++ gcc make
 
 VOLUME $_root $_log $_etc
 ENTRYPOINT [ "runme.sh" ]
