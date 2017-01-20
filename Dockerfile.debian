@@ -18,7 +18,10 @@ RUN apt-get update && apt-get install -y \
  wget \
  gcc \
  g++ \
+ libmysqlclient-dev \
 
+&& mv /data/misc/bash-prompt ~/.profile \
+&& mv /data/bin/* /usr/bin \
 && ln -s /usr/bin/perl /usr/local/bin/perl \
 && curl -L http://cpanmin.us -o /usr/bin/cpanm; chmod +x /usr/bin/cpanm \
 && cpanm -n \
@@ -31,8 +34,6 @@ RUN apt-get update && apt-get install -y \
  File::Slurp \
  CSS::Inliner \
 
-&& mv /data/misc/bash-prompt ~/.profile \
-&& mv /data/bin/* /usr/bin \
 && apt-get purge -y g++ gcc make curl wget \
 && rm -rf /root/.cpanm /var/lib/apt/lists/* 
 

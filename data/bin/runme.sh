@@ -19,7 +19,7 @@ is_empty() { if [[ ! -d "$1" ]] || [[ ! "$(ls -A $1)" ]]; then echo "yes"; fi }
 
 if [ ! "${_vols}" ]; then 
     echo "ERROR: you need run Docker with the -v parameter, try:"
-    echo "    \$ docker run --rm -v /tmp:/data aquaron/anle help"
+    echo "    \$ docker run --rm -v /tmp:/data aquaron/anf help"
     exit 1
 fi
 
