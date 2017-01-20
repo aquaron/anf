@@ -36,7 +36,6 @@ RUN apk add --no-cache \
 && rm -rf /root/.cpanm \
 
 && mv /data/misc/bash-prompt ~/.profile \
-&& patch -p0 < /data/misc/Badger-Debug.patch \
 && mv /data/bin/* /usr/bin \
 && apk del g++ gcc make curl wget perl-dev 
 
