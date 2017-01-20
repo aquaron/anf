@@ -1,0 +1,43 @@
+FROM debian
+MAINTAINER Paul Pham <docker@aquaron.com>
+
+ENV \
+ _etc=/etc/nginx \
+ _root=/usr/share/nginx \
+ _log=/var/log/nginx \
+ _sock=/tmp/cgi.sock \
+ PERL5LIB=/usr/share/nginx/lib
+
+COPY data /data
+
+RUN apt-get update && apt-get install -y \
+ nginx \
+ fcgiwrap \
+ make \
+ curl \
+ wget \
+ gcc \
+ g++ \
+
+&& ln -s /usr/bin/perl /usr/local/bin/perl \
+&& curl -L http://cpanmin.us -o /usr/bin/cpanm; chmod +x /usr/bin/cpanm \
+&& cpanm -n \
+ CGI JSON \
+ DBD::mysql \
+ Apache::Session::MySQL \
+ Redis \
+ Crypt::ScryptKDF \
+ Crypt::CBC \
+ File::Slurp \
+ CSS::Inliner \
+
+&& mv /data/misc/bash-prompt ~/.profile \
+&& mv /data/bin/* /usr/bin \
+&& apt-get purge -y g++ gcc make curl wget \
+&& rm -rf /root/.cpanm /var/lib/apt/lists/* 
+
+ONBUILD RUN apt-get install -y openssl g++ gcc make
+
+VOLUME $_root $_log $_etc
+ENTRYPOINT [ "runme.sh" ]
+CMD [ "daemon" ]
