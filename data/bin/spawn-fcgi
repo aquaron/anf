@@ -14,8 +14,8 @@ close STDIN;
 unlink $socket_path;
 
 my $socket = IO::Socket::UNIX->new(
-    Local 	=> $socket_path,
-    Listen 	=> 100
+    Local       => $socket_path,
+    Listen      => 100
 );
 
 die "Cannot create socket at $socket_path: $!\n" unless $socket;

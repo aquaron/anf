@@ -2,5 +2,5 @@
 
 print "Content-type: text/plain\n\n";
 foreach (sort keys %ENV) {
-	printf qq{%30s => %s\n}, $_, $ENV{$_};
+    printf qq{%30s => %s\n}, $_, $ENV{$_};
 }
