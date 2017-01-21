@@ -39,7 +39,7 @@ Usage: docker run -t --rm -v <local-dir>:/data ${_ports} aquaron/anf <command>
              reload  - reload nginx configuration file
              reopen  - reopens nginx log files
 
-`
+EOT`
 
 if [[ $# -lt 1 ]] || [[ ! "${_vols}" ]]; then echo "$HELP"; exit 1; fi
 

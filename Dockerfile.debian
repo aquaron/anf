@@ -20,9 +20,12 @@ RUN apt-get update && apt-get install -y \
  g++ \
  libmysqlclient-dev \
 
-&& mv /data/misc/bash-prompt ~/.profile \
+&& adduser --system --no-create-home --disabled-login --disabled-password --group nginx \
+&& mv /data/misc/bash-prompt ~/.bashrc \
+&& echo -e '#!/bin/bash\n' "$(tail -n +2 /data/bin/runme.sh)" > /data/bin/runme.sh \
 && mv /data/bin/* /usr/bin \
 && ln -s /usr/bin/perl /usr/local/bin/perl \
+&& ln -s /usr/sbin/fcgiwrap /usr/bin/fcgiwrap \
 && curl -L http://cpanmin.us -o /usr/bin/cpanm; chmod +x /usr/bin/cpanm \
 && cpanm -n \
  CGI JSON \
