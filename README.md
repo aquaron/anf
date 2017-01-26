@@ -17,6 +17,7 @@ This script accepts these commands:
 | reload    | reloads `nginx` configurations                   |
 | reopen    | reopens `nginx` log files                        |
 | kill      | `killall nginx`                                  |
+| cron      | runs a script in `cron` dir                      |
 | test      | check `nginx`'s configuration                    |
 
 ### `init`
@@ -63,6 +64,13 @@ To reload the configuration after you've made some changes:
 
     docker exec -it anf runme.sh reload
 
+
+## Use `cron` command in `crontab`
+
+Add a script for use with `crontab` by add it to `<datadir>/cron` (make sure it's executable)
+and add this to `crontab -l`:
+
+    * * * * * docker exec -t <container-name> runme.sh cron run-every-minute.sh
 
 -------------------------------------------------------------------------------
 
