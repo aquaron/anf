@@ -19,11 +19,9 @@ is_empty() { if [[ ! -d "$1" ]] || [[ ! "$(ls -A $1)" ]]; then echo "yes"; fi }
 
 if [ ! "${_vols}" ]; then 
     echo "ERROR: you need run Docker with the -v parameter, try:"
-    echo "    \$ docker run --rm -v /tmp:/data aquaron/anle help"
+    echo "    \$ docker run --rm -v /tmp:/data aquaron/anf help"
     exit 1
 fi
-
-_run="docker run -t --rm ${_vols} ${_ports} aquaron/anf"
 
 HELP=`cat <<EOT
 Usage: docker run -t --rm -v <local-dir>:/data ${_ports} aquaron/anf <command>
@@ -39,7 +37,7 @@ Usage: docker run -t --rm -v <local-dir>:/data ${_ports} aquaron/anf <command>
              reload  - reload nginx configuration file
              reopen  - reopens nginx log files
 
-`
+EOT`
 
 if [[ $# -lt 1 ]] || [[ ! "${_vols}" ]]; then echo "$HELP"; exit 1; fi
 
@@ -57,8 +55,6 @@ _cmd=$1
 _host=$2
 _datadir=/data
 
-_start="docker run ${_vols} ${_ports} -d aquaron/anf"
-
 write_systemd_file() {
     local _name="$1"
     local _map="$2"
@@ -67,7 +63,9 @@ write_systemd_file() {
     local _service_file="${_etc}/docker-${_name}.service"
     local _script="${_etc}/install-systemd.sh"
 
-    apk --no-cache add bash
+    if [ "$(grep ^ID= /etc/os-release)" = 'ID=alpine' ]; then
+        apk --no-cache add bash
+    fi
 
     cat ${_datadir}/templ/systemd.service \
         | write_template.sh name \""${_name}"\" map \""${_map}"\" port \""${_port}"\" \
@@ -83,7 +81,9 @@ write_systemd_file() {
 
     echo "Created ${_script}"
 
-    apk del bash
+    if [ "$(grep ^ID= /etc/os-release)" = 'ID=alpine' ]; then
+        apk del bash
+    fi
 }
 
 run_init() {
