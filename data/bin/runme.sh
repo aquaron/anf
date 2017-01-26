@@ -19,7 +19,7 @@ is_empty() { if [[ ! -d "$1" ]] || [[ ! "$(ls -A $1)" ]]; then echo "yes"; fi }
 
 if [ ! "${_vols}" ]; then 
     echo "ERROR: you need run Docker with the -v parameter, try:"
-    echo "    \$ docker run --rm -v /tmp:/data aquaron/anf help"
+    echo "    \$ docker run --rm -v /tmp:/data aquaron/anle help"
     exit 1
 fi
 
@@ -39,7 +39,7 @@ Usage: docker run -t --rm -v <local-dir>:/data ${_ports} aquaron/anf <command>
              reload  - reload nginx configuration file
              reopen  - reopens nginx log files
 
-EOT`
+`
 
 if [[ $# -lt 1 ]] || [[ ! "${_vols}" ]]; then echo "$HELP"; exit 1; fi
 
@@ -98,6 +98,10 @@ run_init() {
             cp -R ${_datadir}/cgi ${_root}/cgi
         fi
 
+        if [ "$(is_empty ${_root}/cron)" ]; then
+            mkdir ${_root}/cron
+        fi
+
         write_systemd_file "anf" "${_vols}" "${_ports}" 
     fi
 }
@@ -111,6 +115,16 @@ assert_ok() {
 
 start_fcgi() { /usr/bin/fcgi-run start; }
 stop_fcgi() { /usr/bin/fcgi-run stop; }
+
+run_cron() {
+    _file="${_root}/cron/$1"
+    if [ ! -s "${_file}" ]; then
+        echo "${_file} not found"
+        exit 1
+    fi
+
+    ${_file}
+}
 
 case "${_cmd}" in
     init)
@@ -148,6 +162,12 @@ case "${_cmd}" in
     test)
         hint "test nginx.conf"
         nginx -t
+        ;;
+
+    cron)
+        hint "running cron $2"
+        run_cron "$2"
+        assert_ok
         ;;
      
     clean)
