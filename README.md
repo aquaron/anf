@@ -40,6 +40,13 @@ starting and stopping.
 
 When you change configurations, reload and test it.
 
+### `cron`
+
+Add a script for use with `crontab` by add it to `<datadir>/cron` (make sure it's executable)
+and add this to `crontab -l`:
+
+    * * * * * docker exec -t <container-name> runme.sh cron run-every-minute.sh
+
 ## Execute `runme.sh` using `docker`
 
 You can execute the script from `docker` commandline by using this format:
@@ -64,13 +71,6 @@ To reload the configuration after you've made some changes:
 
     docker exec -it anf runme.sh reload
 
-
-## Use `cron` command in `crontab`
-
-Add a script for use with `crontab` by add it to `<datadir>/cron` (make sure it's executable)
-and add this to `crontab -l`:
-
-    * * * * * docker exec -t <container-name> runme.sh cron run-every-minute.sh
 
 -------------------------------------------------------------------------------
 
