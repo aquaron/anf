@@ -16,14 +16,11 @@ if [ ! "$(whoami)" = "root" ]; then
 fi
 
 while true; do
-    read -p "Install systemd startup file? " yn
+    read -p "Install systemd ${_service}? " yn
     case $yn in
         [Yy]* ) 
-            ln -s ${_file} /etc/systemd/system
+            systemctl enable ${_file}
             systemctl daemon-reload
-            echo "Test service run:\n\$ systemctl start ${_service}\n"
-            echo "Enable service at startup:\n\$ systemctl enable ${_service}"
-
             exit 0
             ;;
         * ) exit 1
