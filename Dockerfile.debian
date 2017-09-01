@@ -12,13 +12,14 @@ COPY data /data
 
 RUN apt-get update && apt-get install -y \
  nginx \
+ perl \
  fcgiwrap \
  make \
  curl \
  wget \
  gcc \
  g++ \
- libmysqlclient-dev \
+ libmariadbclient-dev \
 
 && adduser --system --no-create-home --disabled-login --disabled-password --group nginx \
 && mv /data/misc/bash-prompt ~/.bashrc \
