@@ -74,12 +74,8 @@ write_systemd_file() {
 
     echo "Created ${_service_file}"
 
-    cat ${_datadir}/templ/install.sh \
-        | write_template.sh name \""${_name}"\" \
-        > ${_script}
-
+    cp ${_datadir}/templ/install.sh ${_script}
     chmod 755 ${_script}
-
     echo "Created ${_script}"
 
     if [ "$(grep ^ID= /etc/os-release)" = 'ID=alpine' ]; then
