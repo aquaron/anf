@@ -6,7 +6,7 @@ ENV \
  _root=/usr/share/nginx \
  _log=/var/log/nginx \
  _sock=/tmp/cgi.sock \
- PERL5LIB=/usr/share/nginx/lib
+ PERL5LIB=/usr/share/nginx/lib:.
 
 COPY data /data
 
@@ -41,7 +41,7 @@ RUN apt-get update && apt-get install -y \
 
 && apt-get purge -y g++ gcc make curl wget \
 && apt-get autoremove -y \
-&& rm -rf /root/.cpanm /var/lib/apt/lists/* 
+&& rm -rf /root/.cpanm /var/lib/apt/lists/*
 
 ONBUILD RUN apt-get update && apt-get install -y openssl g++ gcc make
 
