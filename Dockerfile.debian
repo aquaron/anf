@@ -2,6 +2,7 @@ FROM debian:stretch-slim
 MAINTAINER Paul Pham <docker@aquaron.com>
 
 ENV \
+ _image=aquaron/anf:debian \
  _etc=/etc/nginx \
  _root=/usr/share/nginx \
  _log=/var/log/nginx \
@@ -28,7 +29,7 @@ RUN apt-get update && apt-get install -y \
 && ln -s /usr/bin/perl /usr/local/bin/perl \
 && ln -s /usr/sbin/fcgiwrap /usr/bin/fcgiwrap \
 && ln -s /sbin/killall5 /sbin/killall \
-&& curl -L http://cpanmin.us -o /usr/bin/cpanm; chmod +x /usr/bin/cpanm \
+&& curl -sL http://cpanmin.us -o /usr/bin/cpanm; chmod +x /usr/bin/cpanm \
 && cpanm -n \
  CGI JSON \
  DBD::mysql \
@@ -39,8 +40,8 @@ RUN apt-get update && apt-get install -y \
  File::Slurp \
  CSS::Inliner \
 
-&& apt-get purge -y g++ gcc make curl wget \
-&& apt-get autoremove -y \
+&& apt-get purge -qy g++ gcc make curl wget \
+&& apt-get autoremove -qy \
 && rm -rf /root/.cpanm /var/lib/apt/lists/*
 
 ONBUILD RUN apt-get update && apt-get install -y openssl g++ gcc make

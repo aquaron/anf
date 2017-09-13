@@ -2,6 +2,7 @@ FROM alpine
 MAINTAINER Paul Pham <docker@aquaron.com>
 
 ENV \
+ _image=aquaron/anf \
  _etc=/etc/nginx \
  _root=/usr/share/nginx \
  _log=/var/log/nginx \
@@ -11,6 +12,7 @@ ENV \
 COPY data /data
 
 RUN apk add --no-cache \
+ bash \
  nginx \
  fcgiwrap \
  perl \
@@ -23,7 +25,7 @@ RUN apk add --no-cache \
  mysql-dev \
 
 && ln -s /usr/bin/perl /usr/local/bin/perl \
-&& curl -L http://cpanmin.us -o /usr/bin/cpanm; chmod +x /usr/bin/cpanm \
+&& curl -sL http://cpanmin.us -o /usr/bin/cpanm; chmod +x /usr/bin/cpanm \
 && cpanm -n \
  CGI JSON \
  DBD::mysql \
@@ -37,9 +39,9 @@ RUN apk add --no-cache \
 
 && mv /data/misc/bash-prompt ~/.profile \
 && mv /data/bin/* /usr/bin \
-&& apk del g++ gcc make curl wget perl-dev 
+&& apk del --no-cache g++ gcc make curl wget perl-dev
 
-ONBUILD RUN apk add --no-cache openssl g++ gcc make perl-dev expat-dev 
+ONBUILD RUN apk add --no-cache openssl g++ gcc make perl-dev expat-dev
 
 VOLUME $_root $_log $_etc
 ENTRYPOINT [ "runme.sh" ]
