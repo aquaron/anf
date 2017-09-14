@@ -160,7 +160,7 @@ function enable_service() {
     if [[ "$(yesno "Enable service $(yellow "${_service}")?")" = "yes" ]]; then
         systemctl enable ${_file}
         systemctl daemon-reload
-        echo "Test service run:\n\$ systemctl start $(green "${_service}")\n"
+        echo -e "Test service run:\n\$ systemctl start $(green "${_service}")\n"
     elif [[ "$(yesno "Remove file $(yellow "$_file")?")" = "yes" ]]; then
         rm $_file
         echo "File $(red "$_file") removed"
