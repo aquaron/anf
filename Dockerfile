@@ -27,7 +27,8 @@ RUN apk add --no-cache \
 && ln -s /usr/bin/perl /usr/local/bin/perl \
 && curl -sL http://cpanmin.us -o /usr/bin/cpanm; chmod +x /usr/bin/cpanm \
 && cpanm -n \
- CGI JSON \
+ CGI\
+ JSON::XS \
  DBD::mysql \
  Apache::Session::MySQL \
  Redis \

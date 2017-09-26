@@ -31,7 +31,8 @@ RUN apt-get update && apt-get install -y \
 && ln -s /sbin/killall5 /sbin/killall \
 && curl -sL http://cpanmin.us -o /usr/bin/cpanm; chmod +x /usr/bin/cpanm \
 && cpanm -n \
- CGI JSON \
+ CGI \
+ JSON::XS \
  DBD::mysql \
  Apache::Session::MySQL \
  Redis \
