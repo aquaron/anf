@@ -35,7 +35,7 @@ function stop_fcgi() { /usr/bin/fcgi-run stop; }
 
 function run_cron() {
     _file="${_root}/cron/$1"
-    if [ ! -s "${_file}" ]; then
+    if [[ ! -s "${_file}" ]]; then
         echo "${_file} not found"
         exit 1
     fi
